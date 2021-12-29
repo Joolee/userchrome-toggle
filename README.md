@@ -8,13 +8,16 @@ This [Firefox extension](https://addons.mozilla.org/firefox/addon/userchrome-tog
 The addon accomplishes this by changing the browsers 'title prefix' attribute. Don't worry! By using invisible UTF-8 characters by default, you won't even notice a thing! Toggle a single style or select up to three styles to toggle in a drop-down menu. Hardcore keyboard users can even use customizable keyboard-shortcuts.
 
 # Screenshots
-<img align="left" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/single-toggle.png">
+<img width="300" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/single-toggle.png">
+
 Toggle a single style with the toolbar button
 
-<img align="left" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/multiple-radio.png">
+<img width="300" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/multiple-radio.png">
+
 Switch between different styles
 
-<img align="left" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/multiple-checkbox.png">
+<img width="300" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/multiple-checkbox.png">
+
 Select multiple styles to be active together
 
 
