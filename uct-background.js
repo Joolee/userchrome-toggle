@@ -44,6 +44,20 @@ async function main() {
     console.log('Init complete');
 }
 
+// Update user settings to new defaults after updating the extension
+async function updateSettings(settings) {
+    if (settings.general.settingsVersion < defaultSettings.general.settingsVersion) {
+        if (settings.general.settingsVersion < 1.1) {
+            settings.general.notifyMe = defaultSettings.general.notifyMe;
+        }
+
+        settings.general.settingsVersion < defaultSettings.general.settingsVersion
+        await browser.storage.local.set(settings);
+    }
+
+    return settings;
+}
+
 async function updateButtonStatus() {
     let settings = await browser.storage.local.get('toggles');
     // Use reduce function on array to count all enabled toggles
@@ -74,9 +88,10 @@ async function getStyleSettings(styleId) {
 }
 
 async function initializeSettings() {
-    let settings = await browser.storage.local.get('toggles');
+    let settings = await browser.storage.local.get();
     if (settings.toggles) {
         console.log('Loading user settings', settings);
+        settings = await updateSettings(settings);
     } else {
         console.log('Initializing default settings', defaultSettings);
 
