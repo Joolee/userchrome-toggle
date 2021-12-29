@@ -21,8 +21,9 @@ this.defaultSettings = {
         }
     ],
     general: {
-        settingsVersion: 1,
-        allowMultiple: false
+        settingsVersion: 1.1,
+        allowMultiple: false,
+        notifyMe: true
     }
 }
 
@@ -158,14 +159,15 @@ async function userToggle(styleId, newState) {
             hrState = 'on';
     }
 
-    // Generate user notification
+    // Generate user notification when enabled
     console.log('Toggling', styleId, hrState);
-    browser.notifications.create(`toggle-${styleId}`, {
-        type: "basic",
-        title: "Userchrome style toggle",
-        message: `Turned ${toggle.name} ${hrState}`
-    });
-
+    if (settings.general.notifyMe) {
+        browser.notifications.create(`toggle-${styleId}`, {
+            type: "basic",
+            title: "Userchrome style toggle",
+            message: `Turned ${toggle.name} ${hrState}`
+        });
+    }
 
     await browser.storage.local.set(settings);
 

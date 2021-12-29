@@ -18,6 +18,7 @@ async function fillSettings() {
     let toggles = settings.toggles;
 
     document.getElementById('allowmultiple').checked = settings.general.allowMultiple;
+    document.getElementById('notifyme').checked = settings.general.notifyMe;
 
     for (let i = 0; i < toggles.length; i++) {
         let prefixId = i + 1;
@@ -130,6 +131,7 @@ function copySelectorToClipboard(prefixId) {
 async function saveGeneralSettings(event) {
     let settings = await browser.storage.local.get('general');
     settings.general.allowMultiple = document.getElementById('allowmultiple').checked;
+    settings.general.notifyMe = document.getElementById('notifyme').checked;
     console.log('Save general', settings);
     await browser.storage.local.set(settings);
 
