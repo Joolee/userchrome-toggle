@@ -2,7 +2,7 @@
 
 async function documentLoaded() {
     document.getElementById('settings-link').addEventListener('click', event => {
-		browser.runtime.openOptionsPage();
+        browser.runtime.openOptionsPage();
         window.close();
         return false
     })
@@ -12,11 +12,11 @@ async function documentLoaded() {
     const toggles = settings.toggles;
     const type = settings.general.allowMultiple ? 'checkbox' : 'radio';
 
-    for (let i=0; i < toggles.length; i++) {
-        if ( ! toggles[i].enabled)
+    for (let i = 0; i < toggles.length; i++) {
+        if (!toggles[i].enabled)
             continue;
 
-        addSelectRow(type, i+1, toggles[i].name)
+        addSelectRow(type, i + 1, toggles[i].name)
     }
 
     if (type == "radio") {
