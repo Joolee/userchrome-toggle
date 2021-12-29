@@ -64,8 +64,9 @@ async function updateButtonStatus() {
     let togglesEnabled = settings.toggles.reduce((pv, cv) => cv.enabled ? pv + 1 : pv, 0);
 
     if (togglesEnabled < 2) {
+        let toggle = settings.toggles[0];
         browser.browserAction.setTitle({
-            title: 'Toggle ' + settings.toggles[0].name
+            title: `Turn ${toggle.name} ` + (toggle.state ? 'off' : 'on')
         });
 
         // Disable popup mode
@@ -188,6 +189,7 @@ async function userToggle(styleId, newState) {
 
     // Update title to reflect new truth
     updateTitlePrefixes();
+    updateButtonStatus();
 }
 
 
