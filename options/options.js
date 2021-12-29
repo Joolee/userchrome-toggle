@@ -135,6 +135,7 @@ async function saveGeneralSettings(event) {
     console.log('Save general', settings);
     await browser.storage.local.set(settings);
 
+    // The selector as displayed to the client must change when multiple styles are allowed to be active
     settings = await browser.storage.local.get('toggles');
     for (let i = 0; i < settings.toggles.length; i++) {
         updateSelector(i + 1);

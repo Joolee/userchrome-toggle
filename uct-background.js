@@ -31,10 +31,10 @@ this.defaultSettings = {
 async function main() {
     await initializeSettings();
     await updateButtonStatus();
-    await updateTitlePrefixes()
+    await updateTitlePrefixes();
 
     // Always toggle style 1 on button click
-    // This event will only fire when no other toggles have been enabled
+    // This event will only fire when the button is not in pop-up mode
     browser.browserAction.onClicked.addListener(() => {
         userToggle(1)
     });
@@ -60,8 +60,9 @@ async function updateSettings(settings) {
 
 async function updateButtonStatus() {
     let settings = await browser.storage.local.get('toggles');
+
     // Use reduce function on array to count all enabled toggles
-    let togglesEnabled = settings.toggles.reduce((pv, cv) => cv.enabled ? pv + 1 : pv, 0);
+    let togglesEnabled = settings.toggles.reduce((count, toggle) => toggle.enabled ? count + 1 : count, 0);
 
     if (togglesEnabled < 2) {
         let toggle = settings.toggles[0];
@@ -71,7 +72,7 @@ async function updateButtonStatus() {
 
         // Disable popup mode
         browser.browserAction.setPopup({ popup: null })
-        console.log('Disable popup mode');
+        console.log('Disabled popup mode');
     } else {
         browser.browserAction.setTitle({
             title: 'Show userchrome toggles'
@@ -79,7 +80,7 @@ async function updateButtonStatus() {
 
         // Enable popup mode
         browser.browserAction.setPopup({ popup: "popup/popup.html" })
-        console.log('Enable popup mode', togglesEnabled);
+        console.log('Enabled popup mode', togglesEnabled);
     }
 }
 
@@ -101,6 +102,7 @@ async function initializeSettings() {
         // Open settings page for the user
         browser.runtime.openOptionsPage();
     }
+
 }
 
 // Detect current window title prefix to allow toggling
