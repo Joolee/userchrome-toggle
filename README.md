@@ -20,6 +20,10 @@ Switch between different styles
 
 Select multiple styles to be active together
 
+<img width="684" src="https://github.com/Joolee/userchrome-toggle/raw/main/.github/assets/settings-toggle.png">
+
+Sample of the settings for a single toggle
+
 
 # Get help
 * Report issues or feature requests in the [bug tracker](https://github.com/Joolee/userchrome-toggle/issues)
