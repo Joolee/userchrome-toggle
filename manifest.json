@@ -1,54 +1,54 @@
 {
-    "manifest_version": 2,
-    "name": "Userchrome Toggle",
-    "version": "1.1",
-    "description": "This extension allows you to toggle userchrome.css styles on-the-fly with buttons and hotkeys.",
-    "icons": {
-        "48": "images/icon.svg"
-    },
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "userchrome-toggle@joolee.nl"
-        }
-    },
-    "browser_action": {
-        "default_title": "Toggle userchrome style",
-        "default_icon": "images/toggle-off.svg",
-        "default_area": "navbar",
-        "browser_style": true
-    },
-    "background": {
-        "scripts": [
-            "uct-background.js"
-        ]
-    },
-    "commands": {
-        "toggle-style-1": {
-            "suggested_key": {
-                "default": "Ctrl+Shift+1"
-            },
-            "description": "Toggle userchrome style 1"
-        },
-        "toggle-style-2": {
-            "suggested_key": {
-                "default": "Ctrl+Shift+2"
-            },
-            "description": "Toggle userchrome style 2"
-        },
-        "toggle-style-3": {
-            "suggested_key": {
-                "default": "Ctrl+Shift+3"
-            },
-            "description": "Toggle userchrome style 3"
-        }
-    },
-    "options_ui": {
-        "page": "options/options.html",
-        "browser_style": true,
-        "chrome_style": true
-    },
-    "permissions": [
-        "notifications",
-        "storage"
-    ]
+	"manifest_version": 2,
+	"name": "Userchrome Toggle",
+	"version": "1.2",
+	"description": "This extension allows you to toggle userchrome.css styles on-the-fly with buttons and hotkeys.",
+	"icons": {
+		"48": "images/icon.svg"
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "userchrome-toggle@joolee.nl"
+		}
+	},
+	"browser_action": {
+		"default_title": "Toggle userchrome style",
+		"default_icon": "images/toggle-off.svg",
+		"default_area": "navbar",
+		"browser_style": true
+	},
+	"background": {
+		"scripts": [
+			"uct-background.js"
+		]
+	},
+	"commands": {
+		"toggle-style-1": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+1"
+			},
+			"description": "Toggle userchrome style 1"
+		},
+		"toggle-style-2": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+2"
+			},
+			"description": "Toggle userchrome style 2"
+		},
+		"toggle-style-3": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+3"
+			},
+			"description": "Toggle userchrome style 3"
+		}
+	},
+	"options_ui": {
+		"page": "options/options.html",
+		"browser_style": true,
+		"chrome_style": true
+	},
+	"permissions": [
+		"notifications",
+		"storage"
+	]
 }
