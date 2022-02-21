@@ -2,162 +2,187 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <script src="options.js"></script>
-    <style>
-        .helpAvailable {
-            cursor: help;
-        }
-        
-        a.external::after {
-            background: transparent url('../images/remote-link.svg') 0 0 no-repeat;
-            background-size: 16px;
-            content: "";
-            height: 16px;
-            margin-left: 3px;
-            width: 16px;
-            display: inline-block;
-        }
-    </style>
+	<meta charset="utf-8" />
+	<script src="options.js"></script>
+	<style>
+		.helpAvailable {
+			cursor: help;
+		}
+
+		a.external::after {
+			background: transparent url('../images/remote-link.svg') 0 0 no-repeat;
+			background-size: 16px;
+			content: "";
+			height: 16px;
+			margin-left: 3px;
+			width: 16px;
+			display: inline-block;
+		}
+
+		input[type=checkbox] {
+			min-width: 16px;
+		}
+	</style>
 </head>
 
 <body>
-    <div class="panel-section panel-section-formElements">
-        <div>
-            Learn about userchrome.css on <a href="https://userchrome.org/" class="external">userchrome.org</a>. Don't forget to enable the setting below in about:config!<br>
-            <input type="text" value="toolkit.legacyUserProfileCustomizations.stylesheets" readonly="readonly" style="width: 100%">
-        </div>
-    </div>
+	<div class="panel-section panel-section-formElements">
+		<div>
+			Learn about userchrome.css on <a href="https://userchrome.org/" class="external">userchrome.org</a>. Don't
+			forget to enable the setting below in about:config!<br>
+			<input type="text" value="toolkit.legacyUserProfileCustomizations.stylesheets" readonly="readonly"
+				style="width: 100%">
+		</div>
+	</div>
 
-    <div class="panel-section panel-section-formElements" id="toggle-form-1">
-        <div class="panel-formElements-item">
-            General settings
-        </div>
-        <div class="panel-section-separator"></div>
-        <div class="panel-formElements-item browser-style" style="flex-wrap: wrap;">
-            <input type="checkbox" id="allowmultiple" />
-            <label for="allowmultiple" class="browser-style-label">Allow multiple styles to be active together.<br>This makes the CSS selector less specific so be careful choosing your prefixes!</label>
-        </div>
-        <div class="panel-formElements-item browser-style" style="flex-wrap: wrap;">
-            <input type="checkbox" id="notifyme" />
-            <label for="notifyme" class="browser-style-label">Display a notification when toggling a style.</label>
-        </div>
-        <div class="panel-formElements-item">
-            <button class="browser-style" id="save-general">Apply changes</button>
-            <span style="margin-left: 10px; display: none;" id="save-message-1">Settings applied</span>
-        </div>
-    </div>
+	<div class="panel-section panel-section-formElements" id="toggle-form-1">
+		<div class="panel-formElements-item">
+			General settings
+		</div>
+		<div class="panel-section-separator"></div>
+		<div class="panel-formElements-item browser-style" style="flex-wrap: wrap;">
+			<input type="checkbox" id="allowmultiple" />
+			<label for="allowmultiple" class="browser-style-label">Allow multiple styles to be active together.<br>This
+				makes the CSS selector less specific so be careful choosing your prefixes!</label>
+		</div>
+		<div class="panel-formElements-item browser-style" style="flex-wrap: wrap;">
+			<input type="checkbox" id="notifyme" />
+			<label for="notifyme" class="browser-style-label">Display a notification when toggling a style.</label>
+		</div>
+		<div class="panel-formElements-item">
+			<button class="browser-style" id="save-general">Apply changes</button>
+			<span style="margin-left: 10px; display: none;" id="save-message-1">Settings applied</span>
+		</div>
+	</div>
 
-    <div class="panel-section panel-section-formElements" id="toggle-form-1">
-        <div class="panel-formElements-item">
-            Style toggle 1 <img src="../images/toggle-off.svg" height="16px" style="margin-left: 10px;">
-        </div>
-        <div class="panel-section-separator"></div>
-        <div class="panel-formElements-item browser-style">
-            <label for="enable-1" class="browser-style-label">Enabled:</label>
-            <input type="checkbox" id="enable-1" checked="checked" disabled="disabled" />
-            <label for="enable-1" class="browser-style-label">(This toggle is tied to the toolbar button and cannot be disabled)</label>
-        </div>
-        <div class="panel-formElements-item browser-style">
-            <label for="name-1" class="browser-style-label">Name:</label>
-            <input type="text" id="name-1" style="margin-right: 10px">
-        </div>
-        <div class="panel-formElements-item browser-style" id="default-warning-1">
-            Note: By default the 'prefix' uses an invisible character, that means the values below appear empty. Just copy the complete content of the 'Selector' box to your userchrome.css and see the magic.
-        </div>
-        <div class="panel-formElements-item browser-style">
-            <label for="prefix-1" class="browser-style-label">Prefix:</label>
-            <input type="text" id="prefix-1" style="margin-right: 10px">
-            <input type="button" id="default-1" value="Restore default invisible value" class="helpAvailable" title="This will use the 'invisible' UTF-8 character U+180E 'Mongolian Vowel Separator'">
-        </div>
-        <div class="panel-formElements-item">
-            <label for="selector-1" class="browser-style-label">CSS Selector:</label>
-            <input type="text" id="selector-1" readonly="readonly" style="margin-right: 10px" class="helpAvailable" title="Paste this selector before your CSS rule in userchrome.css" />
-            <input type="button" id="clipboard-1" value="Copy to clipboard">
-        </div>
-        <div class="panel-formElements-item">
-            <label for="hotkey-1" class="browser-style-label">Hotkey:</label>
-            <a id="hotkey-1" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" class="helpAvailable external" title="Hotkeys are managed by Firefox. Click to learn how to modify them"></a>
-        </div>
-        <div class="panel-formElements-item">
-            <button class="browser-style" id="save-1">Apply changes</button>
-            <span style="margin-left: 10px; display: none;" id="save-message-1">Settings applied</span>
-        </div>
-    </div>
+	<div class="panel-section panel-section-formElements" id="toggle-form-1">
+		<div class="panel-formElements-item">
+			Style toggle 1 <img src="../images/toggle-off.svg" height="16px" style="margin-left: 10px;">
+		</div>
+		<div class="panel-section-separator"></div>
+		<div class="panel-formElements-item browser-style">
+			<label for="enable-1" class="browser-style-label">Enabled:</label>
+			<input type="checkbox" id="enable-1" checked="checked" disabled="disabled" />
+			<label for="enable-1" class="browser-style-label">(This toggle is tied to the toolbar button and cannot be
+				disabled)</label>
+		</div>
+		<div class="panel-formElements-item browser-style">
+			<label for="name-1" class="browser-style-label">Name:</label>
+			<input type="text" id="name-1" style="margin-right: 10px">
+		</div>
+		<div class="panel-formElements-item browser-style" id="default-warning-1">
+			Note: By default the 'prefix' uses an invisible character, that means the values below appear empty. Just
+			copy the complete content of the 'Selector' box to your userchrome.css and see the magic.
+		</div>
+		<div class="panel-formElements-item browser-style">
+			<label for="prefix-1" class="browser-style-label">Prefix:</label>
+			<input type="text" id="prefix-1" style="margin-right: 10px">
+			<input type="button" id="default-1" value="Restore default invisible value" class="helpAvailable"
+				title="This will use the 'invisible' UTF-8 character U+180E 'Mongolian Vowel Separator'">
+		</div>
+		<div class="panel-formElements-item">
+			<label for="selector-1" class="browser-style-label">CSS Selector:</label>
+			<input type="text" id="selector-1" readonly="readonly" style="margin-right: 10px" class="helpAvailable"
+				title="Paste this selector before your CSS rule in userchrome.css" />
+			<input type="button" id="clipboard-1" value="Copy to clipboard">
+		</div>
+		<div class="panel-formElements-item">
+			<label for="hotkey-1" class="browser-style-label">Hotkey:</label>
+			<a id="hotkey-1" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox"
+				class="helpAvailable external"
+				title="Hotkeys are managed by Firefox. Click to learn how to modify them"></a>
+		</div>
+		<div class="panel-formElements-item">
+			<button class="browser-style" id="save-1">Apply changes</button>
+			<span style="margin-left: 10px; display: none;" id="save-message-1">Settings applied</span>
+		</div>
+	</div>
 
-    <div class="panel-section panel-section-formElements" id="toggle-form-2">
-        <div class="panel-formElements-item">
-            Style toggle 2
-        </div>
-        <div class="panel-section-separator"></div>
-        <div class="panel-formElements-item browser-style">
-            <label for="enable-2" class="browser-style-label">Enabled:</label>
-            <input type="checkbox" id="enable-2" />
-            <label for="enable-2" class="browser-style-label">(Enabling more than one toggle will change the toolbar button to display a menu)</label>
-        </div>
-        <div class="panel-formElements-item browser-style">
-            <label for="name-2" class="browser-style-label">Name:</label>
-            <input type="text" id="name-2" style="margin-right: 10px">
-        </div>
-        <div class="panel-formElements-item browser-style" id="default-warning-2">
-            Note: By default the 'prefix' uses an invisible character, that means the values below appear empty. Just copy the complete content of the 'Selector' box to your userchrome.css and see the magic.
-        </div>
-        <div class="panel-formElements-item browser-style">
-            <label for="prefix-2" class="browser-style-label">Prefix:</label>
-            <input type="text" id="prefix-2" style="margin-right: 10px">
-            <input type="button" id="default-2" value="Restore default invisible value" class="helpAvailable" title="This will use the 'invisible' UTF-8 character U+200B 'Zero Width Space'">
-        </div>
-        <div class="panel-formElements-item">
-            <label for="selector-2" class="browser-style-label">CSS Selector:</label>
-            <input type="text" id="selector-2" readonly="readonly" style="margin-right: 10px" class="helpAvailable" title="Paste this selector before your CSS rule in userchrome.css" />
-            <input type="button" id="clipboard-2" value="Copy to clipboard">
-        </div>
-        <div class="panel-formElements-item">
-            <label for="hotkey-2" class="browser-style-label">Hotkey:</label>
-            <a id="hotkey-2" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" class="helpAvailable external" title="Hotkeys are managed by Firefox. Click to learn how to modify them"></a>
-        </div>
-        <div class="panel-formElements-item">
-            <button class="browser-style" id="save-2">Apply changes</button>
-            <span style="margin-left: 10px; display: none;" id="save-message-2">Settings applied</span>
-        </div>
-    </div>
+	<div class="panel-section panel-section-formElements" id="toggle-form-2">
+		<div class="panel-formElements-item">
+			Style toggle 2
+		</div>
+		<div class="panel-section-separator"></div>
+		<div class="panel-formElements-item browser-style">
+			<label for="enable-2" class="browser-style-label">Enabled:</label>
+			<input type="checkbox" id="enable-2" />
+			<label for="enable-2" class="browser-style-label">(Enabling more than one toggle will change the toolbar
+				button to display a menu)</label>
+		</div>
+		<div class="panel-formElements-item browser-style">
+			<label for="name-2" class="browser-style-label">Name:</label>
+			<input type="text" id="name-2" style="margin-right: 10px">
+		</div>
+		<div class="panel-formElements-item browser-style" id="default-warning-2">
+			Note: By default the 'prefix' uses an invisible character, that means the values below appear empty. Just
+			copy the complete content of the 'Selector' box to your userchrome.css and see the magic.
+		</div>
+		<div class="panel-formElements-item browser-style">
+			<label for="prefix-2" class="browser-style-label">Prefix:</label>
+			<input type="text" id="prefix-2" style="margin-right: 10px">
+			<input type="button" id="default-2" value="Restore default invisible value" class="helpAvailable"
+				title="This will use the 'invisible' UTF-8 character U+200B 'Zero Width Space'">
+		</div>
+		<div class="panel-formElements-item">
+			<label for="selector-2" class="browser-style-label">CSS Selector:</label>
+			<input type="text" id="selector-2" readonly="readonly" style="margin-right: 10px" class="helpAvailable"
+				title="Paste this selector before your CSS rule in userchrome.css" />
+			<input type="button" id="clipboard-2" value="Copy to clipboard">
+		</div>
+		<div class="panel-formElements-item">
+			<label for="hotkey-2" class="browser-style-label">Hotkey:</label>
+			<a id="hotkey-2" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox"
+				class="helpAvailable external"
+				title="Hotkeys are managed by Firefox. Click to learn how to modify them"></a>
+		</div>
+		<div class="panel-formElements-item">
+			<button class="browser-style" id="save-2">Apply changes</button>
+			<span style="margin-left: 10px; display: none;" id="save-message-2">Settings applied</span>
+		</div>
+	</div>
 
-    <div class="panel-section panel-section-formElements" id="toggle-form-3">
-        <div class="panel-formElements-item">
-            Style toggle 3
-        </div>
-        <div class="panel-section-separator"></div>
-        <div class="panel-formElements-item browser-style">
-            <label for="enable-3" class="browser-style-label">Enabled:</label>
-            <input type="checkbox" id="enable-3" />
-            <label for="enable-3" class="browser-style-label">(Enabling more than one toggle will change the toolbar button to display a menu)</label>
-        </div>
-        <div class="panel-formElements-item browser-style">
-            <label for="name-3" class="browser-style-label">Name:</label>
-            <input type="text" id="name-3" style="margin-right: 10px">
-        </div>
-        <div class="panel-formElements-item browser-style" id="default-warning-3">
-            Note: By default the 'prefix' uses an invisible character, that means the values below appear empty. Just copy the complete content of the 'Selector' box to your userchrome.css and see the magic.
-        </div>
-        <div class="panel-formElements-item browser-style">
-            <label for="prefix-3" class="browser-style-label">Prefix:</label>
-            <input type="text" id="prefix-3" style="margin-right: 10px">
-            <input type="button" id="default-3" value="Restore default invisible value" class="helpAvailable" title="This will use the 'invisible' UTF-8 character U+200C 'Zero Width Non-Joiner'">
-        </div>
-        <div class="panel-formElements-item">
-            <label for="selector-3" class="browser-style-label">CSS Selector:</label>
-            <input type="text" id="selector-3" readonly="readonly" style="margin-right: 10px" class="helpAvailable" title="Paste this selector before your CSS rule in userchrome.css" />
-            <input type="button" id="clipboard-3" value="Copy to clipboard">
-        </div>
-        <div class="panel-formElements-item">
-            <label for="hotkey-3" class="browser-style-label">Hotkey:</label>
-            <a id="hotkey-3" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" class="helpAvailable external" title="Hotkeys are managed by Firefox. Click to learn how to modify them"></a>
-        </div>
-        <div class="panel-formElements-item">
-            <button class="browser-style" id="save-3">Apply changes</button>
-            <span style="margin-left: 10px; display: none;" id="save-message-3">Settings applied</span>
-        </div>
-    </div>
+	<div class="panel-section panel-section-formElements" id="toggle-form-3">
+		<div class="panel-formElements-item">
+			Style toggle 3
+		</div>
+		<div class="panel-section-separator"></div>
+		<div class="panel-formElements-item browser-style">
+			<label for="enable-3" class="browser-style-label">Enabled:</label>
+			<input type="checkbox" id="enable-3" />
+			<label for="enable-3" class="browser-style-label">(Enabling more than one toggle will change the toolbar
+				button to display a menu)</label>
+		</div>
+		<div class="panel-formElements-item browser-style">
+			<label for="name-3" class="browser-style-label">Name:</label>
+			<input type="text" id="name-3" style="margin-right: 10px">
+		</div>
+		<div class="panel-formElements-item browser-style" id="default-warning-3">
+			Note: By default the 'prefix' uses an invisible character, that means the values below appear empty. Just
+			copy the complete content of the 'Selector' box to your userchrome.css and see the magic.
+		</div>
+		<div class="panel-formElements-item browser-style">
+			<label for="prefix-3" class="browser-style-label">Prefix:</label>
+			<input type="text" id="prefix-3" style="margin-right: 10px">
+			<input type="button" id="default-3" value="Restore default invisible value" class="helpAvailable"
+				title="This will use the 'invisible' UTF-8 character U+200C 'Zero Width Non-Joiner'">
+		</div>
+		<div class="panel-formElements-item">
+			<label for="selector-3" class="browser-style-label">CSS Selector:</label>
+			<input type="text" id="selector-3" readonly="readonly" style="margin-right: 10px" class="helpAvailable"
+				title="Paste this selector before your CSS rule in userchrome.css" />
+			<input type="button" id="clipboard-3" value="Copy to clipboard">
+		</div>
+		<div class="panel-formElements-item">
+			<label for="hotkey-3" class="browser-style-label">Hotkey:</label>
+			<a id="hotkey-3" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox"
+				class="helpAvailable external"
+				title="Hotkeys are managed by Firefox. Click to learn how to modify them"></a>
+		</div>
+		<div class="panel-formElements-item">
+			<button class="browser-style" id="save-3">Apply changes</button>
+			<span style="margin-left: 10px; display: none;" id="save-message-3">Settings applied</span>
+		</div>
+	</div>
 </body>
 
 </html>
