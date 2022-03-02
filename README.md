@@ -1,7 +1,7 @@
 # Userchrome Toggle
 <img align="right" src="https://github.com/Joolee/userchrome-toggle/raw/main/images/icon.svg" width="175">
 
-The userchrome.css file lets you customize the Firefox interface deeply. While very powerfull, any changes will require a restart of the browser to take effect.
+The userchrome.css file lets you customize the Firefox interface deeply. While very powerful, any changes will require a restart of the browser to take effect.
 
 This [Firefox extension](https://addons.mozilla.org/firefox/addon/userchrome-toggle/) adds a new button to your toolbar that allows you to toggle custom userchrome.css styling on-the fly. The magic happens by including special CSS selectors in your user styles. Manipulating those selectors allows you to enable/disable up to three of your modifications on-the-fly.
 
