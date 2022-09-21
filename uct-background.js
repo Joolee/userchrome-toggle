@@ -24,7 +24,20 @@ this.defaultSettings = {
         settingsVersion: 1.1,
         allowMultiple: false,
         notifyMe: true
-    }
+    },
+    per_window_toggles: new Map()
+}
+
+async function windowCreated(window){
+    let settings = await browser.storage.local.get();
+    settings.per_window_toggles[window.id]=defaultSettings.toggles;
+    await updateSettings(settings);
+}
+
+async function windowDestroyed(windowId){
+    let settings = await browser.storage.local.get();
+    settings.per_window_toggles.delete(window.id);
+    await updateSettings(settings);
 }
 
 
@@ -41,6 +54,10 @@ async function main() {
 
     // Trigger on registered hotkeys
     browser.commands.onCommand.addListener(userToggle);
+    
+    // Proper window state handling
+    browser.windows.onCreated.addListener(windowCreated);
+    browser.windows.onRemoved.addListener(windowDestroyed);
     console.log('Init complete');
 }
 
