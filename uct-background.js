@@ -31,7 +31,11 @@ this.defaultSettings = {
 
 async function windowCreated(window){
     let settings = await browser.storage.local.get();
-    settings.per_window_toggles[window.id]=(settings.per_window_toggles[settings.current_windowId]);
+	if(!settings.current_windowId===undefined){
+		settings.per_window_toggles[window.id]=(settings.per_window_toggles[settings.current_windowId]);
+	} else {
+		settings.per_window_toggles[window.id]=defaultSettings.toggles;
+	}
     await updateSettings(settings);
 }
 
