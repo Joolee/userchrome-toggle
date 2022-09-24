@@ -9,7 +9,7 @@ async function documentLoaded() {
 
 
     const settings = await browser.storage.local.get(['toggles', 'general']);
-    const toggles = settings.toggles;
+    const toggles = settings.per_window_toggles[settings.current_windowId];
     const type = settings.general.allowMultiple ? 'checkbox' : 'radio';
 
     for (let i = 0; i < toggles.length; i++) {
