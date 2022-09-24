@@ -44,12 +44,12 @@ async function windowFocusChanged(windowId){
     let settings = await browser.storage.local.get();
     settings.current_windowId=windowId;
     await updateSettings(settings);
+	await updateButtonStatus();
 }
 
 
 async function main() {
     await initializeSettings();
-    await updateButtonStatus();
     await updateTitlePrefixes();
 
     // Always toggle style 1 on button click
@@ -86,10 +86,10 @@ async function updateButtonStatus() {
     let settings = await browser.storage.local.get('toggles');
 
     // Use reduce function on array to count all enabled toggles
-    let togglesEnabled = settings.toggles.reduce((count, toggle) => toggle.enabled ? count + 1 : count, 0);
+    let togglesEnabled = settings.per_window_toggles[settings.current_windowId].reduce((count, toggle) => toggle.enabled ? count + 1 : count, 0);
 
     if (togglesEnabled < 2) {
-        let toggle = settings.toggles[0];
+        let toggle = (settings.per_window_toggles[settings.current_windowId])[0];
         browser.browserAction.setTitle({
             title: `Turn ${toggle.name} ` + (toggle.state ? 'off' : 'on')
         });
