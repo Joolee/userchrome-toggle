@@ -36,7 +36,13 @@ async function windowCreated(window){
 
 async function windowDestroyed(windowId){
     let settings = await browser.storage.local.get();
-    settings.per_window_toggles.delete(window.id);
+    settings.per_window_toggles.delete(windowId);
+    await updateSettings(settings);
+}
+
+async function windowFocusChanged(windowId){
+    let settings = await browser.storage.local.get();
+    settings.current_windowId=windowId;
     await updateSettings(settings);
 }
 
@@ -58,6 +64,7 @@ async function main() {
     // Proper window state handling
     browser.windows.onCreated.addListener(windowCreated);
     browser.windows.onRemoved.addListener(windowDestroyed);
+    browser.windows.onFocusChanged.addListener(windowFocusChanged);
     console.log('Init complete');
 }
 
