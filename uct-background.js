@@ -25,12 +25,13 @@ this.defaultSettings = {
         allowMultiple: false,
         notifyMe: true
     },
+	//unused, written for for clarity. this is done in initializeSettings()
     per_window_toggles: new Map()
 }
 
 async function windowCreated(window){
     let settings = await browser.storage.local.get();
-    settings.per_window_toggles[window.id]=defaultSettings.toggles;
+    settings.per_window_toggles[window.id]=(settings.per_window_toggles[settings.current_windowId]);
     await updateSettings(settings);
 }
 
@@ -110,11 +111,12 @@ async function updateButtonStatus() {
 
 async function getStyleSettings(styleId) {
     let settings = await browser.storage.local.get('toggles');
-    return settings.toggles[styleId - 1].prefix;
+    return (settings.per_window_toggles[settings.current_windowId])[styleId - 1].prefix;
 }
 
 async function initializeSettings() {
     let settings = await browser.storage.local.get();
+	settings.per_window_toggles=new Map();
     if (settings.toggles) {
         console.log('Loading user settings', settings);
         settings = await updateSettings(settings);
@@ -144,7 +146,7 @@ async function updateTitlePrefixes() {
     // Only change current window
     const windowId = await browser.windows.getCurrent();
     const settings = await browser.storage.local.get(['toggles', 'general']);
-    const toggles = settings.toggles;
+    const toggles = (settings.per_window_toggles[settings.current_windowId]);
     let titlePrefix = '';
 
     // Loop through all toggles
@@ -172,17 +174,17 @@ async function userToggle(styleId, newState) {
     let hrState = 'off';
     let toggle = { name: 'all styles' }
 
-    if (styleId && !settings.toggles[styleId[0] - 1].enabled) {
-        console.log('Style is disabled', settings.toggles[styleId[0] - 1]);
+    if (styleId && !(settings.per_window_toggles[settings.current_windowId])[styleId[0] - 1].enabled) {
+        console.log('Style is disabled', (settings.per_window_toggles[settings.current_windowId])[styleId[0] - 1]);
         return
     }
 
     // When only one option allowed or no valid style is selected, reset all others
     // Also do this when no valid style has been found
     if (!settings.general.allowMultiple || !styleId) {
-        for (let i = 0; i < settings.toggles.length; i++) {
+        for (let i = 0; i < (settings.per_window_toggles[settings.current_windowId]).length; i++) {
             if (!styleId || styleId[0] - 1 != i)
-                settings.toggles[i].state = false;
+                (settings.per_window_toggles[settings.current_windowId])[i].state = false;
         }
     }
 
@@ -190,12 +192,12 @@ async function userToggle(styleId, newState) {
     if (styleId) {
         styleId = styleId[0];
         // Invert toggle state or set requested state and save in settings
-        toggle = settings.toggles[styleId - 1];
+        toggle = (settings.per_window_toggles[settings.current_windowId])[styleId - 1];
 
         if (typeof(newState) == 'undefined')
             newState = !toggle.state;
 
-        settings.toggles[styleId - 1].state = newState;
+        (settings.per_window_toggles[settings.current_windowId])[styleId - 1].state = newState;
 
         if (newState)
             hrState = 'on';
