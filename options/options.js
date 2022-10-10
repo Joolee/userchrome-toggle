@@ -89,10 +89,10 @@ async function saveChanges(prefixId) {
     console.log('Save', prefixId, settings);
     await browser.storage.local.set(settings);
 
-	settings.per_window_toggles.forEach( t => {
-		t.enabled = settings.toggles[prefixId - 1].enabled;
+	browser.extension.getBackgroundPage().per_window_toggles.forEach( (toggs,key) => {
+		toggs[prefixId].enabled = settings.toggles[prefixId - 1].enabled;
 		if(!settings.toggles[prefixId - 1].enabled){
-			t.state = false;
+			toggs[prefixId].state = false;
 		}
 	});
 	

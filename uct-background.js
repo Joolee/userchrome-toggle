@@ -24,11 +24,10 @@ this.defaultSettings = {
         settingsVersion: 1.1,
         allowMultiple: false,
         notifyMe: true
-    },
-	//unused, written for for clarity. this is done in initializeSettings()
-    per_window_toggles: new Map()
+    }
 }
 
+this.per_window_toggles=new Map();
 this.lastWindowId=undefined;
 this.secondToLastWindowId=undefined;
 
@@ -38,34 +37,28 @@ async function windowCreated(window){
 	if(lastId===window.id){
 		lastId=secondToLastWindowId;
 	}
-    let settings = await browser.storage.local.get();
 	let pwt;
 	if(lastId!==undefined){
-		pwt=structuredClone(settings.per_window_toggles.get(lastId));
+		pwt=structuredClone(per_window_toggles.get(lastId));
 	} else {
 		pwt=structuredClone(defaultSettings.toggles);
 	}
-	settings.per_window_toggles.set(window.id,pwt);
-	await browser.storage.local.set(settings);
+	per_window_toggles.set(window.id,pwt);
 	await updateTitlePrefixes();
 }
 
 async function windowDestroyed(windowId){
-    let settings = await browser.storage.local.get();
-    settings.per_window_toggles.delete(windowId);
-	await browser.storage.local.set(settings);
+    per_window_toggles.delete(windowId);
 }
 
 async function windowFocusChanged(windowId){
 	if(windowId===browser.windows.WINDOW_ID_NONE) return;
 	
-	let settings = await browser.storage.local.get();
-	let toggles=settings.per_window_toggles.get(windowId);
+	let toggles=per_window_toggles.get(windowId);
 	
 	if(toggles===undefined){
 		//if extension was just loaded for example
-		settings.per_window_toggles.set(windowId,structuredClone(defaultSettings.toggles));
-		await browser.storage.local.set(settings);
+		per_window_toggles.set(windowId,structuredClone(defaultSettings.toggles));
 	}
 		
 	secondToLastWindowId=lastWindowId;
@@ -107,14 +100,13 @@ async function updateSettings(settings) {
 }
 
 async function updateButtonStatus() {
-    let settings = await browser.storage.local.get();
 
     // Use reduce function on array to count all enabled toggles
-    let togglesEnabled = settings.per_window_toggles.get((await browser.windows.getCurrent()).id)
+    let togglesEnabled = per_window_toggles.get((await browser.windows.getCurrent()).id)
 		.reduce((count, toggle) => toggle.enabled ? count + 1 : count, 0);
 
     if (togglesEnabled < 2) {
-        let toggle = (settings.per_window_toggles.get((await browser.windows.getCurrent()).id))[0];
+        let toggle = (per_window_toggles.get((await browser.windows.getCurrent()).id))[0];
         browser.browserAction.setTitle({
             title: `Turn ${toggle.name} ` + (toggle.state ? 'off' : 'on')
         });
@@ -134,19 +126,16 @@ async function updateButtonStatus() {
 }
 
 async function getStyleSettings(styleId) {
-    let settings = await browser.storage.local.get();
-    return (settings.per_window_toggles.get((await browser.windows.getCurrent()).id))[styleId - 1].prefix;
+    return (per_window_toggles.get((await browser.windows.getCurrent()).id))[styleId - 1].prefix;
 }
 
 async function initializeSettings() {
     let settings = await browser.storage.local.get();
-	settings.per_window_toggles=new Map();
     if (settings.toggles) {
         console.log('Loading user settings', settings);
         await updateSettings(settings);
     } else {
         console.log('Initializing default settings', defaultSettings);
-
         await browser.storage.local.set(defaultSettings);
 
         // Open settings page for the user
@@ -168,7 +157,7 @@ async function toggleTitlePrefix(windowId, titlePrefix) {
 // Update prefix for specified window
 async function updateTitlePrefixes() {
 	let settings = await browser.storage.local.get();
-	settings.per_window_toggles.forEach((toggles,windowId) => {
+	per_window_toggles.forEach((toggles,windowId) => {
 		console.log(`updating: ${windowId} ${toggles}`);
 		let titlePrefix = '';
 
@@ -203,21 +192,21 @@ async function userToggle(styleId, newState) {
     if (
 		styleId
 		&& !(
-				settings.per_window_toggles.get(
+				per_window_toggles.get(
 					windowId
 				)
 			)[styleId[0] - 1].enabled
 		) {
-        console.log('Style is disabled', (settings.per_window_toggles.get(windowId))[styleId[0] - 1]);
+        console.log('Style is disabled', (per_window_toggles.get(windowId))[styleId[0] - 1]);
         return
     }
 
     // When only one option allowed or no valid style is selected, reset all others
     // Also do this when no valid style has been found
     if (!settings.general.allowMultiple || !styleId) {
-        for (let i = 0; i < (settings.per_window_toggles.get(windowId)).length; i++) {
+        for (let i = 0; i < (per_window_toggles.get(windowId)).length; i++) {
             if (!styleId || styleId[0] - 1 != i){
-                (settings.per_window_toggles.get(windowId))[i].state = false;
+                (per_window_toggles.get(windowId))[i].state = false;
 			}
         }
     }
@@ -226,12 +215,12 @@ async function userToggle(styleId, newState) {
     if (styleId) {
         styleId = styleId[0];
         // Invert toggle state or set requested state and save in settings
-        toggle = (settings.per_window_toggles.get(windowId))[styleId - 1];
+        toggle = (per_window_toggles.get(windowId))[styleId - 1];
 
         if (typeof(newState) == 'undefined')
             newState = !toggle.state;
 
-        (settings.per_window_toggles.get(windowId))[styleId - 1].state = newState;
+        (per_window_toggles.get(windowId))[styleId - 1].state = newState;
 
         if (newState)
             hrState = 'on';
@@ -246,8 +235,6 @@ async function userToggle(styleId, newState) {
             message: `Turned ${toggle.name} ${hrState}`
         });
     }
-
-    await browser.storage.local.set(settings);
 
     // Update title to reflect new truth
 	await updateTitlePrefixes();
