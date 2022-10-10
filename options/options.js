@@ -89,6 +89,13 @@ async function saveChanges(prefixId) {
     console.log('Save', prefixId, settings);
     await browser.storage.local.set(settings);
 
+	browser.extension.getBackgroundPage().per_window_toggles.forEach( (toggs,key) => {
+		toggs[prefixId].enabled = settings.toggles[prefixId - 1].enabled;
+		if(!settings.toggles[prefixId - 1].enabled){
+			toggs[prefixId].state = false;
+		}
+	});
+	
     // Let the toolbar button reflect the changes
     browser.extension.getBackgroundPage().updateButtonStatus();
 
