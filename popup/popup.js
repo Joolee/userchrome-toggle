@@ -8,8 +8,8 @@ async function documentLoaded() {
     })
 
 
-    const settings = await browser.storage.local.get(['toggles', 'general']);
-    const toggles = settings.per_window_toggles[settings.current_windowId];
+    const settings = await browser.storage.local.get();
+    const toggles = settings.per_window_toggles.get((await browser.windows.getLastFocused()).id);
     const type = settings.general.allowMultiple ? 'checkbox' : 'radio';
 
     for (let i = 0; i < toggles.length; i++) {
