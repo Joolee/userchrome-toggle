@@ -41,7 +41,7 @@ async function windowCreated(window){
     let settings = await browser.storage.local.get();
 	let pwt;
 	if(lastId!==undefined){
-		pwt=settings.per_window_toggles.get(lastId);
+		pwt=structuredClone(settings.per_window_toggles.get(lastId));
 	} else {
 		pwt=structuredClone(defaultSettings.toggles);
 	}
@@ -195,40 +195,29 @@ async function updateTitlePrefixes() {
 async function userToggle(styleId, newState) {
     // Extract style number from end of string
     styleId = String(styleId).match(/[0-9]+$/);
-
+	let windowId = (await browser.windows.getCurrent()).id;
     let settings = await browser.storage.local.get();
     let hrState = 'off';
     let toggle = { name: 'all styles' }
-
-	if(
-		settings.per_window_toggles.get(
-			(await browser.windows.getCurrent()).id
-		)===undefined
-	){
-		settings.per_window_toggles.set(
-			(await browser.windows.getCurrent()).id,
-			structuredClone(defaultSettings.toggles)
-		);
-	}
 
     if (
 		styleId
 		&& !(
 				settings.per_window_toggles.get(
-					(await browser.windows.getCurrent()).id
+					windowId
 				)
 			)[styleId[0] - 1].enabled
 		) {
-        console.log('Style is disabled', (settings.per_window_toggles.get((await browser.windows.getCurrent()).id))[styleId[0] - 1]);
+        console.log('Style is disabled', (settings.per_window_toggles.get(windowId))[styleId[0] - 1]);
         return
     }
 
     // When only one option allowed or no valid style is selected, reset all others
     // Also do this when no valid style has been found
     if (!settings.general.allowMultiple || !styleId) {
-        for (let i = 0; i < (settings.per_window_toggles.get((await browser.windows.getCurrent()).id)).length; i++) {
+        for (let i = 0; i < (settings.per_window_toggles.get(windowId)).length; i++) {
             if (!styleId || styleId[0] - 1 != i){
-                (settings.per_window_toggles.get((await browser.windows.getCurrent()).id))[i].state = false;
+                (settings.per_window_toggles.get(windowId))[i].state = false;
 			}
         }
     }
@@ -237,12 +226,12 @@ async function userToggle(styleId, newState) {
     if (styleId) {
         styleId = styleId[0];
         // Invert toggle state or set requested state and save in settings
-        toggle = (settings.per_window_toggles.get((await browser.windows.getCurrent()).id))[styleId - 1];
+        toggle = (settings.per_window_toggles.get(windowId))[styleId - 1];
 
         if (typeof(newState) == 'undefined')
             newState = !toggle.state;
 
-        (settings.per_window_toggles.get((await browser.windows.getCurrent()).id))[styleId - 1].state = newState;
+        (settings.per_window_toggles.get(windowId))[styleId - 1].state = newState;
 
         if (newState)
             hrState = 'on';
